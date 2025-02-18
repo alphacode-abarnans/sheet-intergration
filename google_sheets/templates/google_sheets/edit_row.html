@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Row</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Heading */
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        form {
+            background: white;
+            padding: 20px;
+            width: 500px;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back Button */
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            background-color: #ffc107;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Row {{ row_number }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="col1" placeholder="Column A" required>
+        <input type="text" name="col2" placeholder="Column B" required>
+        <input type="text" name="col3" placeholder="Column C" required>
+        <input type="text" name="col4" placeholder="Column D" required>
+        <button type="submit">Save Changes</button>
+    </form>
+    <br>
+    <a href="{% url 'google_sheet_view' %}">Back to Table</a>
+</body>
+</html>

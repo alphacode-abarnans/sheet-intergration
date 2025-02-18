@@ -3,24 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <title>Google Sheets Data</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Heading */
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Add Button */
+        a {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            text-decoration: none;
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #218838;
+        }
+
+        /* Table Styling */
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table Headers */
+        th {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            text-transform: uppercase;
+        }
+
+        /* Table Rows */
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        /* Alternate Row Coloring */
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .actions a {
+            padding: 6px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        /* Edit Button */
+        .actions a:first-child {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .actions a:first-child:hover {
+            background-color: #e0a800;
+        }
+
+        /* Delete Button */
+        .actions a:last-child {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .actions a:last-child:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Data from Google Sheets</h1>
-    <table border="1">
-        <tr>
-            <th>Column A</th>
-            <th>Column B</th>
-            <th>Column C</th>
-            <th>Column D</th>
-        </tr>
-        {% for row in data %}
+    <h1>Google Sheets Data</h1>
+    <a href="{% url 'add_row' %}">+ Add New Row</a>
+    <table>
+        <thead>
             <tr>
-                <td>{{ row.0 }}</td>
-                <td>{{ row.1 }}</td>
-                <td>{{ row.2 }}</td>
-                <td>{{ row.3 }}</td>
+                <th>Column A</th>
+                <th>Column B</th>
+                <th>Column C</th>
+                <th>Column D</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row.0|default:"-" }}</td>
+                <td>{{ row.1|default:"-" }}</td>
+                <td>{{ row.2|default:"-" }}</td>
+                <td>{{ row.3|default:"-" }}</td>
+                <td class="actions">
+                    <a href="{% url 'edit_row' forloop.counter %}" style="background-color: #ffc107; color: black; padding: 6px 10px; border-radius: 4px; text-decoration: none;">✏ Edit</a>
+                    <a href="{% url 'delete_row' forloop.counter %}" onclick="return confirm('Are you sure?')" 
+                       style="background-color: #f55666; color: white; padding: 6px 10px; border-radius: 4px; text-decoration: none;">❌ Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 </html>
